@@ -1,0 +1,19 @@
+<h1>Re-render Bug</h1>
+<p>
+  Since <code>3.20.4</code> the UI will no re-render if you update the entire model of an array proxy.
+  This can be verified by changing the ember source version to <code>3.19.0</code>
+</p>
+<h4>This will re-render properly</h4>
+<div>People Selected: {{model.group.people.length}}</div>
+<div>People:
+  {{#each model.group.people as |person|}}
+    {{person.name}}&nbsp;
+  {{/each}}
+</div>
+<h4>This will <strong>NOT</strong> re-render</h4>
+<PowerSelectMultiple
+  @options={{model.people}}
+  @selected={{model.group.people}}
+  @onChange={{fn (mut model.group.people)}} as |person| >
+    {{person.name}}
+</PowerSelectMultiple>
